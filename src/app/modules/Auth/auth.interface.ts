@@ -9,10 +9,14 @@ export type TRegisterUser = {
 };
 
 export type TLoginUser = {
-  name: string;
   email: string;
+  password: string;
 };
 
 export interface TRegisterUserModel extends Model<TRegisterUser> {
-  isUserExists(email: string): boolean;
+  isUserExists(email: string): Promise<TRegisterUser>;
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean>;
 }
