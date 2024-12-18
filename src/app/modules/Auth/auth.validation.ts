@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UserValidationSchema = z.object({
+export const RegisterUserValidationSchema = z.object({
   body: z.object({
     name: z
       .string()
@@ -23,5 +23,17 @@ export const UserValidationSchema = z.object({
       .default("user"),
 
     isBlocked: z.boolean().optional().default(false),
+  }),
+});
+
+export const LoginUserValidationSchema = z.object({
+  body: z.object({
+    email: z
+      .string()
+      .trim()
+      .email({ message: "Invalid email address." })
+      .min(1, { message: "Email is required!" }),
+
+    password: z.string().trim().min(1, { message: "Password is required!" }),
   }),
 });
