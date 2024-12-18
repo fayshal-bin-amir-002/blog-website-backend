@@ -14,6 +14,32 @@ const createBlog: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const updateBlog: RequestHandler = catchAsync(async (req, res) => {
+  const id = req?.params?.id;
+  const email = req?.user?.email;
+  const result = await BlogServices.updateBlog(req.body, id, email);
+  sendResponse(res, {
+    success: true,
+    message: "Blog updated successfully",
+    statusCode: 200,
+    data: result,
+  });
+});
+
+const deleteBlog: RequestHandler = catchAsync(async (req, res) => {
+  const id = req?.params?.id;
+  const email = req?.user?.email;
+  const result = await BlogServices.deleteBlogFromDb(id, email);
+  sendResponse(res, {
+    success: true,
+    message: "Blog deleted successfully",
+    statusCode: 200,
+    data: result,
+  });
+});
+
 export const BlogController = {
   createBlog,
+  updateBlog,
+  deleteBlog,
 };

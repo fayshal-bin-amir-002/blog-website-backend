@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import { TBlog } from "./blog.interface";
+import { TBlog, TBlogModel } from "./blog.interface";
 import { title } from "process";
 
 const blogSchema: Schema = new Schema<TBlog>(
@@ -28,6 +28,11 @@ blogSchema.set("toJSON", {
   },
 });
 
-const Blog = mongoose.model<TBlog>("Blog", blogSchema);
+blogSchema.statics.isBlogExists = async function (id: string) {
+  const blog = await Blog.findById(id);
+  return blog;
+};
+
+const Blog = mongoose.model<TBlog, TBlogModel>("Blog", blogSchema);
 
 export default Blog;

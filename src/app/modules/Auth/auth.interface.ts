@@ -1,7 +1,6 @@
 import { Model, Types } from "mongoose";
 
 export type TRegisterUser = {
-  _id?: Types.ObjectId;
   name: string;
   email: string;
   password: string;
@@ -16,6 +15,10 @@ export type TLoginUser = {
 
 export interface TRegisterUserModel extends Model<TRegisterUser> {
   isUserExists(email: string): Promise<TRegisterUser>;
+  findUserId(email: string): Promise<Types.ObjectId | undefined | null>;
+  findUserById(
+    id: Types.ObjectId | undefined,
+  ): Promise<TRegisterUser | undefined | null>;
   isPasswordMatched(
     plainTextPassword: string,
     hashedPassword: string,

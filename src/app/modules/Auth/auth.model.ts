@@ -7,7 +7,6 @@ import httpStatus from "http-status";
 
 const UserSchema: Schema = new Schema<TRegisterUser>(
   {
-    _id: { type: Schema.Types.ObjectId },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: 0 },
@@ -33,6 +32,16 @@ UserSchema.set("toJSON", {
 UserSchema.statics.isUserExists = async function (email: string) {
   const user = await User.findOne({ email }).select("+password");
   return user;
+};
+
+UserSchema.statics.findUserId = async function (email: string) {
+  const user = await User.findOne({ email });
+  return user?._id || undefined;
+};
+
+UserSchema.statics.findUserById = async function (id: string) {
+  const user = await User.findById(id);
+  return user || undefined;
 };
 
 UserSchema.statics.isPasswordMatched = async function (
