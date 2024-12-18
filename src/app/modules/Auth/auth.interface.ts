@@ -1,6 +1,7 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TRegisterUser = {
+  _id?: Types.ObjectId;
   name: string;
   email: string;
   password: string;
@@ -20,3 +21,5 @@ export interface TRegisterUserModel extends Model<TRegisterUser> {
     hashedPassword: string,
   ): Promise<boolean>;
 }
+
+export type TUserRole = "user" | "admin";

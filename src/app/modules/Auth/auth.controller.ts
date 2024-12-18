@@ -8,7 +8,7 @@ const registerUser: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     message: "User registered successfully",
-    statusCode: 200,
+    statusCode: 201,
     data: result,
   });
 });

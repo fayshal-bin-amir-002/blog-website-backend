@@ -7,6 +7,7 @@ import httpStatus from "http-status";
 
 const UserSchema: Schema = new Schema<TRegisterUser>(
   {
+    _id: { type: Schema.Types.ObjectId },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: 0 },

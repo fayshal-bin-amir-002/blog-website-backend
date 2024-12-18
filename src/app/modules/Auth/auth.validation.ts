@@ -1,7 +1,9 @@
+import { Types } from "mongoose";
 import { z } from "zod";
 
 export const RegisterUserValidationSchema = z.object({
   body: z.object({
+    _id: z.instanceof(Types.ObjectId).optional(),
     name: z
       .string()
       .trim()
