@@ -14,15 +14,16 @@ app.use(
       "http://localhost:3500",
       "http://localhost:5000",
       "http://localhost:5700",
+      "https://blog-website-backend-rho.vercel.app",
     ],
-  }),
+  })
 );
 
 // application routes
 app.use("/api", router);
 
 const getAController = async (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.send("BlogSphere is running...");
 };
 
 app.get("/", getAController);
