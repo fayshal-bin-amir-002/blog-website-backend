@@ -1,3 +1,4 @@
+import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 import { User } from "../User/user.model";
 import { TBlog } from "./blog.interface";
@@ -51,8 +52,15 @@ const deleteBlogFromDb = async (_id: string, email: string) => {
   await Blog.findByIdAndDelete(_id);
 };
 
+const getAllBlogsFromDb = async (query: Record<string, unknown>) => {
+  const blogQuery = new QueryBuilder(Blog.find(), query).search();
+  const result = await blogQuery.modelQuery.populate("author");
+  return result;
+};
+
 export const BlogServices = {
   createBlogIntoDb,
   updateBlog,
   deleteBlogFromDb,
+  getAllBlogsFromDb,
 };
