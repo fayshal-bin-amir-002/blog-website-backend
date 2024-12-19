@@ -7,8 +7,15 @@ import httpStatus from "http-status";
 
 const createBlogIntoDb = async (payload: TBlog, email: string) => {
   const id = await User.findUserId(email);
+  const user = await User.isUserExists(email);
   if (!id) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
+  }
+  if (user && user.isBlocked) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User is blocked!");
+  }
+  if (user?.email !== email) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
   }
   payload.author = id;
   const result = (await Blog.create(payload)).populate("author");
@@ -21,9 +28,13 @@ const updateBlog = async (payload: TBlog, _id: string, email: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "Blog not found!");
   }
 
-  const authorId = blog.author;
+  const authorId = blog.author?.toString();
 
   const user = await User.findUserById(authorId);
+
+  if (user && user.isBlocked) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User is blocked!");
+  }
 
   if (user?.email !== email) {
     throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
@@ -41,9 +52,13 @@ const deleteBlogFromDb = async (_id: string, email: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "Blog not found!");
   }
 
-  const authorId = blog.author;
+  const authorId = blog.author?.toString();
 
   const user = await User.findUserById(authorId);
+
+  if (user && user.isBlocked) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User is blocked!");
+  }
 
   if (user?.email !== email) {
     throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
