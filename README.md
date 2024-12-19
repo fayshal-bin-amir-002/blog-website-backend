@@ -4,7 +4,7 @@ A modern blogging platform that allows users to share their thoughts, stories, a
 
 ## 🌐 Live Demo
 
-[Visit BlogSphere](https://blogsphere-live-demo.com)
+[Visit BlogSphere](https://blog-website-backend-rho.vercel.app/)
 
 ---
 
