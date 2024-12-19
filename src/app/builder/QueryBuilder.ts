@@ -21,31 +21,30 @@ class QueryBuilder<T> {
     return this;
   }
 
-  // filter() {
-  //   const queryObj = { ...this.query };
-  //   const excludeFields = ["searchTerm", "sort", "limit", "page", "fields"];
-  //   excludeFields.forEach((el) => delete queryObj[el]);
+  filter() {
+    if (this?.query?.filter) {
+      this.modelQuery = this.modelQuery.find({
+        author: this?.query?.filter,
+      });
+    }
 
-  //   this.modelQuery = this.modelQuery.find(queryObj);
+    return this;
+  }
 
-  //   return this;
-  // }
+  sort() {
+    let order = "-";
+    if (this?.query?.sortOrder) {
+      order = this?.query?.sortOrder === "asc" ? "+" : "-";
+    }
+    let sortBy = "createdAt";
+    if (this?.query?.sortBy) {
+      sortBy = this?.query?.sortBy as string;
+    }
+    const sort = `${order}${sortBy}`;
+    this.modelQuery = this.modelQuery.sort(sort as string);
 
-  // sort() {
-  //   const sort =
-  //     (this?.query?.sort as string)?.split(",")?.join(" ") || "-createdAt";
-  //   this.modelQuery = this.modelQuery.sort(sort as string);
-
-  //   return this;
-  // }
-
-  // fields() {
-  //   const fields =
-  //     (this?.query?.fields as string)?.split(",")?.join(" ") || "-__v";
-  //   this.modelQuery = this.modelQuery.select(fields);
-
-  //   return this;
-  // }
+    return this;
+  }
 }
 
 export default QueryBuilder;

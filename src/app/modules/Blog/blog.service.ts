@@ -53,7 +53,10 @@ const deleteBlogFromDb = async (_id: string, email: string) => {
 };
 
 const getAllBlogsFromDb = async (query: Record<string, unknown>) => {
-  const blogQuery = new QueryBuilder(Blog.find(), query).search();
+  const blogQuery = new QueryBuilder(Blog.find(), query)
+    .search()
+    .filter()
+    .sort();
   const result = await blogQuery.modelQuery.populate("author");
   return result;
 };
