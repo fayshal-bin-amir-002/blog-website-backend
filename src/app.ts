@@ -16,8 +16,9 @@ app.use(
       "http://localhost:5700",
       "https://blog-website-backend-rho.vercel.app",
     ],
-  })
+  }),
 );
+app.use(cookieParser());
 
 // application routes
 app.use("/api", router);

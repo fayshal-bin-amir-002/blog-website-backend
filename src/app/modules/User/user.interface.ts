@@ -1,10 +1,12 @@
 import { Model, Types } from "mongoose";
 
+export type TUserRole = "user" | "admin";
+
 export type TUser = {
   name: string;
   email: string;
   password: string;
-  role?: "admin" | "user";
+  role?: TUserRole;
   isBlocked?: boolean;
 };
 
@@ -17,5 +19,3 @@ export interface TUserModel extends Model<TUser> {
     hashedPassword: string,
   ): Promise<boolean>;
 }
-
-export type TUserRole = "user" | "admin";

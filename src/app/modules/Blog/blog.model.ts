@@ -1,6 +1,5 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { TBlog, TBlogModel } from "./blog.interface";
-import { title } from "process";
 
 const blogSchema: Schema = new Schema<TBlog>(
   {
