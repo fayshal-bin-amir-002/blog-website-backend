@@ -1,5 +1,5 @@
 import AppError from "../../errors/AppError";
-import { User } from "../Auth/auth.model";
+import { User } from "../User/user.model";
 import { TBlog } from "./blog.interface";
 import Blog from "./blog.model";
 import httpStatus from "http-status";

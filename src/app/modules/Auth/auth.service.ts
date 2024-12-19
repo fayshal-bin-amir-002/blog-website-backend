@@ -1,11 +1,12 @@
 import AppError from "../../errors/AppError";
-import { TLoginUser, TRegisterUser } from "./auth.interface";
-import { User } from "./auth.model";
+import { TLoginUser } from "./auth.interface";
 import httpStatus from "http-status";
 import { createToken } from "./auth.utils";
 import config from "../../config";
+import { User } from "../User/user.model";
+import { TUser } from "../User/user.interface";
 
-const registerUserIntoDb = async (userData: TRegisterUser) => {
+const registerUserIntoDb = async (userData: TUser) => {
   const result = await User.create(userData);
   return result;
 };
