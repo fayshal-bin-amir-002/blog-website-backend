@@ -4,26 +4,20 @@ import httpStatus from "http-status";
 import { createToken } from "./auth.utils";
 import config from "../../config";
 import { User } from "../User/user.model";
-import { TUser } from "../User/user.interface";
-
-const registerUserIntoDb = async (userData: TUser) => {
-  const result = await User.create(userData);
-  return result;
-};
 
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExists(payload?.email);
 
   if (!user) {
-    throw new AppError(401, "Invalid credentials");
+    throw new AppError(httpStatus.NOT_FOUND, "Please register your account");
   }
 
   if (user?.isBlocked) {
-    throw new AppError(httpStatus.FORBIDDEN, "This user is blocked!");
+    throw new AppError(httpStatus.BAD_REQUEST, "This user is blocked!");
   }
 
   if (!(await User.isPasswordMatched(payload?.password, user?.password))) {
-    throw new AppError(401, "Invalid credentials");
+    throw new AppError(httpStatus.BAD_REQUEST, "Invalid credentials");
   }
 
   const jwtPayload = {
@@ -34,15 +28,12 @@ const loginUser = async (payload: TLoginUser) => {
   const accessToken = createToken(
     jwtPayload,
     config.jwt_access_secret as string,
-    config.jwt_access_expires_in as string,
+    config.jwt_access_expires_in as string
   );
 
-  return {
-    token: accessToken,
-  };
+  return accessToken;
 };
 
-export const UserServices = {
-  registerUserIntoDb,
+export const AuthServices = {
   loginUser,
 };

@@ -1,6 +1,6 @@
 import { Model, Types } from "mongoose";
 
-export type TUserRole = "user" | "admin";
+export type TUserRole = "visitor" | "admin";
 
 export type TUser = {
   name: string;
@@ -16,6 +16,6 @@ export interface TUserModel extends Model<TUser> {
   findUserById(id: string | undefined): Promise<TUser | undefined | null>;
   isPasswordMatched(
     plainTextPassword: string,
-    hashedPassword: string,
+    hashedPassword: string
   ): Promise<boolean>;
 }

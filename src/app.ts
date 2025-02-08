@@ -12,11 +12,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:3500",
+      "http://localhost:3000",
       "http://localhost:5000",
       "http://localhost:5700",
       "https://blog-website-backend-rho.vercel.app",
     ],
-  }),
+  })
 );
 app.use(cookieParser());
 
@@ -24,7 +25,7 @@ app.use(cookieParser());
 app.use("/api", router);
 
 const getAController = async (req: Request, res: Response) => {
-  res.send("BlogSphere is running...");
+  res.send("Fayshal's portfolio is running...");
 };
 
 app.get("/", getAController);
