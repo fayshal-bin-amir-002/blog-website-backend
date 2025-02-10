@@ -4,11 +4,16 @@ import { Types } from "mongoose";
 export const createBlogValidationSchema = z.object({
   body: z.object({
     title: z.string().min(1, { message: "Title is required" }),
+    image: z.string().min(1, { message: "Image is required" }),
+    description: z.string().min(1, { message: "Description is required" }),
     content: z.string().min(1, { message: "Content is required" }),
     author: z
-      .instanceof(Types.ObjectId, {
-        message: "Author must be a valid ObjectId",
-      })
+      .union([
+        z.instanceof(Types.ObjectId, {
+          message: "Author must be a valid ObjectId",
+        }),
+        z.null(),
+      ])
       .optional(),
     isPublished: z.boolean().optional().default(true),
   }),
@@ -16,8 +21,9 @@ export const createBlogValidationSchema = z.object({
 
 export const updateBlogValidationSchema = z.object({
   body: z.object({
-    title: z.string().min(1, { message: "Title is required" }),
-    content: z.string().min(1, { message: "Content is required" }),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    content: z.string().optional(),
   }),
 });
 

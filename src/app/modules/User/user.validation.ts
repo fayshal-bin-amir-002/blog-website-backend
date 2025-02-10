@@ -3,6 +3,7 @@ import { z } from "zod";
 export const UserValidationSchema = z.object({
   body: z.object({
     name: z.string().trim().min(1, { message: "Name is required" }),
+    image: z.string().trim().optional().default(""),
 
     email: z
       .string()

@@ -4,28 +4,20 @@ import { TBlog, TBlogModel } from "./blog.interface";
 const blogSchema: Schema = new Schema<TBlog>(
   {
     title: { type: String, required: true },
+    image: { type: String, required: true },
+    description: { type: String, required: true },
     content: { type: String, required: true },
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      default: null,
     },
     isPublished: { type: Boolean, default: true },
   },
   {
     timestamps: true,
-  },
+  }
 );
-
-blogSchema.set("toJSON", {
-  transform: (doc, ret) => {
-    return {
-      _id: ret._id,
-      title: ret.title,
-      content: ret.content,
-      author: ret.author,
-    };
-  },
-});
 
 blogSchema.statics.isBlogExists = async function (id: string) {
   const blog = await Blog.findById(id);

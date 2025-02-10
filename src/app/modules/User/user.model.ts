@@ -9,13 +9,14 @@ const UserSchema: Schema = new Schema<TUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    image: { type: String, default: "" },
     password: { type: String, required: true, select: 0 },
     role: { type: String, enum: ["admin", "user"], default: "user" },
     isBlocked: { type: Boolean, default: false },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 UserSchema.set("toJSON", {
@@ -24,6 +25,7 @@ UserSchema.set("toJSON", {
       _id: ret._id,
       name: ret.name,
       email: ret.email,
+      image: ret.image,
     };
   },
 });
@@ -46,7 +48,7 @@ UserSchema.statics.findUserById = async function (id: string) {
 
 UserSchema.statics.isPasswordMatched = async function (
   plainTextPassword,
-  hashedPassword,
+  hashedPassword
 ) {
   return await bcrypt.compare(plainTextPassword, hashedPassword);
 };
@@ -61,7 +63,7 @@ UserSchema.pre("save", async function (next) {
   }
   this.password = await bcrypt.hash(
     this.password as string,
-    Number(config.bycrypt_salt_round),
+    Number(config.bycrypt_salt_round)
   );
   next();
 });

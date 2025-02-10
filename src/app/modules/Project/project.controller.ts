@@ -55,10 +55,21 @@ const featuredProjects = catchAsync(async (req, res) => {
   });
 });
 
+const deleteProject = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  await ProjectServices.deleteProject(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project deleted successfully",
+  });
+});
+
 export const ProjectControllers = {
   createProject,
   getAllProjects,
   getAProject,
   updateProject,
   featuredProjects,
+  deleteProject,
 };

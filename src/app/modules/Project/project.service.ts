@@ -24,7 +24,13 @@ const updateProject = async (payload: Partial<TProject>, _id: string) => {
 const getFeaturedProjects = async () => {
   const result = await Project.find({ isFeatured: true })
     .sort({ createdAt: -1 })
-    .limit(3);
+    .limit(3)
+    .select("title image live_link description");
+  return result;
+};
+
+const deleteProject = async (_id: string) => {
+  const result = await Project.findByIdAndDelete(_id);
   return result;
 };
 
@@ -34,4 +40,5 @@ export const ProjectServices = {
   getAProject,
   updateProject,
   getFeaturedProjects,
+  deleteProject,
 };

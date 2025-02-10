@@ -14,7 +14,7 @@ class QueryBuilder<T> {
       this.modelQuery = this.modelQuery.find({
         $or: [
           { title: { $regex: this?.query?.search, $options: "i" } },
-          { content: { $regex: this?.query?.search, $options: "i" } },
+          { description: { $regex: this?.query?.search, $options: "i" } },
         ],
       });
     }

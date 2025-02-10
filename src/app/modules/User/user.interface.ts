@@ -5,6 +5,7 @@ export type TUserRole = "visitor" | "admin";
 export type TUser = {
   name: string;
   email: string;
+  image?: string;
   password: string;
   role?: TUserRole;
   isBlocked?: boolean;
