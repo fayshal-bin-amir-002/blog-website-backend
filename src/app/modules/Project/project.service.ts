@@ -17,7 +17,11 @@ const getAProject = async (id: string) => {
 };
 
 const updateProject = async (payload: Partial<TProject>, _id: string) => {
-  const result = await Project.findByIdAndUpdate(_id, payload, { new: true });
+  const result = await Project.findByIdAndUpdate(
+    _id,
+    { ...payload },
+    { new: true }
+  );
   return result;
 };
 

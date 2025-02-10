@@ -41,9 +41,13 @@ const updateBlog = async (payload: TBlog, _id: string, email: string) => {
   //   throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
   // }
 
-  const result = await Blog.findByIdAndUpdate(_id, payload, {
-    new: true,
-  }).populate("author");
+  const result = await Blog.findByIdAndUpdate(
+    _id,
+    { ...payload },
+    {
+      new: true,
+    }
+  ).populate("author");
   return result;
 };
 
